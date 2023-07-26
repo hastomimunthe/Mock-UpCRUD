@@ -65,7 +65,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         statusPicker.delegate = self
         statusPicker.dataSource = self
         alert.textFields?[4].inputView = statusPicker
-
+        
         let submitButton = UIAlertAction(title: "Submit", style: .default) { [weak self ] (action) in
             guard let self = self,
                   let userIdText = alert.textFields?[0].text,
@@ -74,16 +74,16 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                   let passwordText = alert.textFields?[3].text else {
                 return
             }
-    
-            guard let userId = Int64(userIdText) else {
-                 let errorAlert = UIAlertController(title: "Invalid User ID", message: "User ID must be a number!", preferredStyle: .alert)
-                 let dismissAction = UIAlertAction(title: "OK", style: .cancel) { _ in
-                     self.addUser()
-                 }
-                 errorAlert.addAction(dismissAction)
-                 self.present(errorAlert, animated: true, completion: nil)
-                 return
-             }
+            
+            guard Int64(userIdText) != nil else {
+                let errorAlert = UIAlertController(title: "Invalid User ID", message: "User ID must be a number!", preferredStyle: .alert)
+                let dismissAction = UIAlertAction(title: "OK", style: .cancel) { _ in
+                    self.addUser()
+                }
+                errorAlert.addAction(dismissAction)
+                self.present(errorAlert, animated: true, completion: nil)
+                return
+            }
             
             guard !userNameText.isEmpty, !fullNameText.isEmpty, !passwordText.isEmpty, !self.selectedStatus.isEmpty else {
                 let errorAlert = UIAlertController(title: "Incomplete Data", message: "Please fill in all the required fields.", preferredStyle: .alert)
@@ -101,7 +101,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             newUser.namalengkap = fullNameText
             newUser.password = passwordText
             newUser.status = self.selectedStatus
-        
+            
             do {
                 try self.userPresenter.context.save()
             }
@@ -122,15 +122,15 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-
+    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return statusPicker.count
     }
-
+    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return statusPicker[row]
     }
-
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedStatus = statusPicker[row]
         statusTextField?.text = selectedStatus
@@ -189,7 +189,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             textField.placeholder = "Status"
             textField.text = user.status
             self.statusTextField = textField
-
+            
         }
         
         let statusPicker = UIPickerView()
