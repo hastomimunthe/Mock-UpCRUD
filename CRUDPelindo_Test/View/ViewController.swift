@@ -78,6 +78,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             guard Int64(userIdText) != nil else {
                 let errorAlert = UIAlertController(title: "Invalid User ID", message: "User ID must be a number!", preferredStyle: .alert)
                 let dismissAction = UIAlertAction(title: "OK", style: .cancel) { _ in
+                    self.selectedStatus = ""
                     self.addUser()
                 }
                 errorAlert.addAction(dismissAction)
@@ -88,6 +89,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             guard !userNameText.isEmpty, !fullNameText.isEmpty, !passwordText.isEmpty, !self.selectedStatus.isEmpty else {
                 let errorAlert = UIAlertController(title: "Incomplete Data", message: "Please fill in all the required fields.", preferredStyle: .alert)
                 let dismissAction = UIAlertAction(title: "OK", style: .cancel) { _ in
+                    self.selectedStatus = ""
                     self.addUser()
                 }
                 errorAlert.addAction(dismissAction)
