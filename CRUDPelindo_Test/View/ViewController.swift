@@ -183,7 +183,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         editAlert.addTextField { textField in
             textField.placeholder = "Password"
             textField.text = user.password
-            textField.isSecureTextEntry = true
         }
         editAlert.addTextField { textField in
             textField.placeholder = "Status"
